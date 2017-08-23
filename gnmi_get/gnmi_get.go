@@ -27,7 +27,10 @@ func main() {
 		log.Exit("-query must be set")
 	}
 	queries := helper.ParseQuery(*query)
-	getRequest := helper.ToGetRequest(queries)
+	getRequest, err := helper.ToGetRequest(queries)
+	if err != nil {
+		log.Exitf("error generating GetRequest: %v", err)
+	}
 
 	creds := helper.ClientCertificates(*targetName)
 
@@ -41,7 +44,7 @@ func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), *timeOut)
 	defer cancel()
 
-	getResponse, err := c.Get(ctx, &getRequest)
+	getResponse, err := c.Get(ctx, getRequest)
 	if err != nil {
 		log.Exitf("could not get: %v", err)
 	}
