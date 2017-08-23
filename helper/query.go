@@ -1,3 +1,4 @@
+// Package helper provides helper functions for the gNMI binaries.
 package helper
 
 import (
@@ -14,6 +15,7 @@ var (
 	elementRegex   = regexp.MustCompile(`^([^\[]*)\[([^\]]*)\]$`)
 )
 
+// ParseQuery parses command line queries.
 func ParseQuery(query string) []string {
 	var queries []string
 	for _, q := range strings.Split(query, *querySeparator) {
@@ -31,6 +33,7 @@ func parseElement(element string) (name, key string) {
 	return subs[1], subs[2]
 }
 
+// ToGetRequest generates a gnmi GetRequest out of a list of queries.
 func ToGetRequest(queries []string) gnmi.GetRequest {
 	getRequest := gnmi.GetRequest{Path: []*gnmi.Path{}}
 	for _, query := range queries {
@@ -51,6 +54,7 @@ func ToGetRequest(queries []string) gnmi.GetRequest {
 	return getRequest
 }
 
+// ReflectGetRequest generates a gNMI GetResponse out of a gnmi GetRequest.
 func ReflectGetRequest(request *gnmi.GetRequest) *gnmi.GetResponse {
 	response := gnmi.GetResponse{Notification: []*gnmi.Notification{}}
 	notification := gnmi.Notification{Update: []*gnmi.Update{}}

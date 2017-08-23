@@ -5,11 +5,9 @@ import (
 	"time"
 
 	log "github.com/golang/glog"
-	"github.com/openconfig/gnmi/proto/gnmi"
-
-	"ribeiro/gnmi/helper"
-
 	"github.com/kylelemons/godebug/pretty"
+	"github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/samribeiro/gnmi/helper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )

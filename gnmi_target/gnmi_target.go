@@ -1,3 +1,4 @@
+// Binary gnmi_target behaves as a gNMI Target.
 package main
 
 import (
@@ -5,10 +6,9 @@ import (
 	"flag"
 	"net"
 
-	"ribeiro/gnmi/helper"
-
 	log "github.com/golang/glog"
 	"github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/samribeiro/gnmi/helper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
