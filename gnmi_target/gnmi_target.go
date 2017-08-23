@@ -2,9 +2,10 @@
 package main
 
 import (
-	"context"
 	"flag"
 	"net"
+
+	"golang.org/x/net/context"
 
 	log "github.com/golang/glog"
 	"github.com/openconfig/gnmi/proto/gnmi"
