@@ -1,3 +1,4 @@
+// Binary gnmi_get performs a get request against a gNMI Target.
 package main
 
 import (
