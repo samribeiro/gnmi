@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	bind = flag.String("port", ":32123", "Bind to address:port or just :port.")
+	bind = flag.String("bind_address", ":32123", "Bind to address:port or just :port.")
 )
 
 type subscriber struct {
