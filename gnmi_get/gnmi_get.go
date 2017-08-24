@@ -3,9 +3,11 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"time"
 
 	log "github.com/golang/glog"
+	"github.com/golang/protobuf/proto"
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/openconfig/gnmi/proto/gnmi"
 	"github.com/samribeiro/gnmi/helper"
@@ -18,7 +20,16 @@ var (
 	targetName    = flag.String("target_name", "", "Will use this hostname to verify server certificate during TLS handshake.")
 	timeOut       = flag.Duration("time_out", 10*time.Second, "Timeout for the Get request, 10 seconds by default.")
 	query         = flag.String("query", "", "XPath query or queries. Example: system/openflow/controllers/controller[main]/connections/connection[0]/state/address")
+	usePretty     = flag.Bool("pretty", false, "Shows PROTOs using Pretty package instead of PROTO Text Marshal.")
 )
+
+func display(m proto.Message) {
+	if *usePretty {
+		pretty.Print(m)
+		return
+	}
+	fmt.Println(proto.MarshalTextString(m))
+}
 
 func main() {
 	flag.Parse()
@@ -31,7 +42,6 @@ func main() {
 	if err != nil {
 		log.Exitf("error generating GetRequest: %v", err)
 	}
-
 	creds := helper.ClientCertificates(*targetName)
 
 	conn, err := grpc.Dial(*targetAddress, grpc.WithTransportCredentials(creds))
@@ -49,5 +59,9 @@ func main() {
 		log.Exitf("could not get: %v", err)
 	}
 
-	pretty.Print(getResponse)
+	fmt.Println("== getRequest:")
+	display(getRequest)
+
+	fmt.Println("== getResponse:")
+	display(getResponse)
 }
