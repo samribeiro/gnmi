@@ -19,5 +19,5 @@ gnmi_get \
   -ca ca.crt \
   -target_name server \
   -alsologtostderr \
-  -query "system/openflow/controllers/controller[main]/connections/connection[0]/state/address"
+  -query "system/openflow/controllers/controller[name=main]/connections/connection[aux-id=0]/state/address"
 ```
