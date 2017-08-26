@@ -1,12 +1,13 @@
 package credentials
 
 import (
-	"context"
 	"crypto/tls"
 	"crypto/x509"
 	"flag"
 	"fmt"
 	"io/ioutil"
+
+	"golang.org/x/net/context"
 
 	log "github.com/golang/glog"
 	"google.golang.org/grpc"
