@@ -42,22 +42,22 @@ func TestToGetRequest(t *testing.T) {
 			queries: []string{"/", "/a/b/c/d[a=123]/e", "c/d[\"a/b\"=\"12/3\"]"},
 			getRequest: &gnmi.GetRequest{
 				Path: []*gnmi.Path{
-					&gnmi.Path{
+					{
 						Elem: []*gnmi.PathElem{},
 					},
-					&gnmi.Path{
+					{
 						Elem: []*gnmi.PathElem{
-							&gnmi.PathElem{Name: "a"},
-							&gnmi.PathElem{Name: "b"},
-							&gnmi.PathElem{Name: "c"},
-							&gnmi.PathElem{Name: "d", Key: map[string]string{"a": "123"}},
-							&gnmi.PathElem{Name: "e"},
+							{Name: "a"},
+							{Name: "b"},
+							{Name: "c"},
+							{Name: "d", Key: map[string]string{"a": "123"}},
+							{Name: "e"},
 						},
 					},
-					&gnmi.Path{
+					{
 						Elem: []*gnmi.PathElem{
-							&gnmi.PathElem{Name: "c"},
-							&gnmi.PathElem{Name: "d", Key: map[string]string{"a/b": "12/3"}},
+							{Name: "c"},
+							{Name: "d", Key: map[string]string{"a/b": "12/3"}},
 						},
 					},
 				},
