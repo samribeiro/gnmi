@@ -1,5 +1,5 @@
 // Package helper provides helper functions for the gNMI binaries.
-package helper
+package client
 
 import (
 	"flag"
@@ -81,6 +81,8 @@ func ToGetRequest(xpaths []string) (*gnmi.GetRequest, error) {
 					pathElem.Key[key] = valNameTest.Local
 				case xpathparser.Number:
 					pathElem.Key[key] = strconv.FormatFloat(float64(rhs), 'f', -1, 64)
+				case xpathparser.String:
+					pathElem.Key[key] = string(rhs)
 				default:
 					return nil, fmt.Errorf("error parsing RHS in xpath")
 				}
@@ -90,17 +92,4 @@ func ToGetRequest(xpaths []string) (*gnmi.GetRequest, error) {
 		getRequest.Path = append(getRequest.Path, &path)
 	}
 	return &getRequest, nil
-}
-
-// ReflectGetRequest generates a gNMI GetResponse out of a gnmi GetRequest.
-func ReflectGetRequest(request *gnmi.GetRequest) *gnmi.GetResponse {
-	response := gnmi.GetResponse{Notification: []*gnmi.Notification{}}
-	notification := gnmi.Notification{Update: []*gnmi.Update{}}
-	for _, path := range request.Path {
-		typedValue := gnmi.TypedValue{Value: &gnmi.TypedValue_StringVal{StringVal: "TESTDATA"}}
-		update := gnmi.Update{Path: path, Val: &typedValue}
-		notification.Update = append(notification.Update, &update)
-	}
-	response.Notification = append(response.Notification, &notification)
-	return &response
 }

@@ -10,7 +10,7 @@ import (
 	log "github.com/golang/glog"
 	"github.com/openconfig/gnmi/proto/gnmi"
 	"github.com/samribeiro/gnmi/credentials"
-	"github.com/samribeiro/gnmi/helper"
+	"github.com/samribeiro/gnmi/target"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/reflection"
@@ -46,7 +46,7 @@ func (s *server) Get(ctx context.Context, in *gnmi.GetRequest) (*gnmi.GetRespons
 		return nil, grpc.Errorf(codes.PermissionDenied, msg)
 	}
 	log.Infoln("served a Get request, ", msg)
-	return helper.ReflectGetRequest(in), nil
+	return target.ReflectGetRequest(in), nil
 }
 
 func (s *server) Set(ctx context.Context, in *gnmi.SetRequest) (*gnmi.SetResponse, error) {

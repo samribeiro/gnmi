@@ -1,4 +1,4 @@
-package helper
+package client
 
 import (
 	"testing"
@@ -21,8 +21,8 @@ func TestParseQuery(t *testing.T) {
 			parsedQueries: []string{"a/b/c/d", "c/d/e/f"},
 		},
 		{
-			query:         "/a/b/c/d[12/3]/e",
-			parsedQueries: []string{"/a/b/c/d[12/3]/e"},
+			query:         "/a/b/c/d[12/3=4]/e",
+			parsedQueries: []string{"/a/b/c/d[12/3=4]/e"},
 		},
 	}
 	for _, tt := range tests {
@@ -39,7 +39,7 @@ func TestToGetRequest(t *testing.T) {
 		getRequest *gnmi.GetRequest
 	}{
 		{
-			queries: []string{"/a/b/c/d[a=123]/e", "c/d[b=123]"},
+			queries: []string{"/a/b/c/d[a=123]/e", "c/d[b=\"12/3\"]"},
 			getRequest: &gnmi.GetRequest{
 				Path: []*gnmi.Path{
 					&gnmi.Path{
@@ -54,7 +54,7 @@ func TestToGetRequest(t *testing.T) {
 					&gnmi.Path{
 						Elem: []*gnmi.PathElem{
 							&gnmi.PathElem{Name: "c"},
-							&gnmi.PathElem{Name: "d", Key: map[string]string{"b": "123"}},
+							&gnmi.PathElem{Name: "d", Key: map[string]string{"b": "12/3"}},
 						},
 					},
 				},

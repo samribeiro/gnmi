@@ -10,8 +10,8 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/samribeiro/gnmi/client"
 	"github.com/samribeiro/gnmi/credentials"
-	"github.com/samribeiro/gnmi/helper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
@@ -38,8 +38,8 @@ func main() {
 	if *query == "" {
 		log.Exit("-query must be set")
 	}
-	queries := helper.ParseQuery(*query)
-	getRequest, err := helper.ToGetRequest(queries)
+	queries := client.ParseQuery(*query)
+	getRequest, err := client.ToGetRequest(queries)
 	if err != nil {
 		log.Exitf("error generating GetRequest: %v", err)
 	}

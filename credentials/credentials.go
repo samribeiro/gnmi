@@ -18,7 +18,7 @@ var (
 	ca             = flag.String("ca", "", "CA certificate file.")
 	cert           = flag.String("cert", "", "Certificate file.")
 	key            = flag.String("key", "", "Private key file.")
-	authorizedUser = authorization{}
+	authorizedUser = userCredentials{}
 	usernameKey    = "username"
 	passwordKey    = "password"
 )
@@ -28,19 +28,19 @@ func init() {
 	flag.StringVar(&authorizedUser.password, "password", "", "The password matching the provided username.")
 }
 
-type authorization struct {
+type userCredentials struct {
 	username string
 	password string
 }
 
-func (a *authorization) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
+func (a *userCredentials) GetRequestMetadata(ctx context.Context, uri ...string) (map[string]string, error) {
 	return map[string]string{
 		usernameKey: a.username,
 		passwordKey: a.password,
 	}, nil
 }
 
-func (a *authorization) RequireTransportSecurity() bool {
+func (a *userCredentials) RequireTransportSecurity() bool {
 	return true
 }
 
