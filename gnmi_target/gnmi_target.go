@@ -9,6 +9,7 @@ import (
 
 	log "github.com/golang/glog"
 	"github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/samribeiro/gnmi/credentials"
 	"github.com/samribeiro/gnmi/helper"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -39,7 +40,12 @@ func (s *server) Capabilities(ctx context.Context, in *gnmi.CapabilityRequest) (
 }
 
 func (s *server) Get(ctx context.Context, in *gnmi.GetRequest) (*gnmi.GetResponse, error) {
-	log.Infoln("served a Get request")
+	msg, ok := credentials.AuthorizeUser(ctx)
+	if !ok {
+		log.Infoln("denied a Get request,", msg)
+		return nil, grpc.Errorf(codes.PermissionDenied, msg)
+	}
+	log.Infoln("served a Get request, ", msg)
 	return helper.ReflectGetRequest(in), nil
 }
 
@@ -56,9 +62,7 @@ func (s *server) Subscribe(subs gnmi.GNMI_SubscribeServer) error {
 func main() {
 	flag.Parse()
 
-	creds := helper.ServerCertificates()
-
-	s := grpc.NewServer(grpc.Creds(creds))
+	s := grpc.NewServer(credentials.ServerCredentials()...)
 
 	gnmi.RegisterGNMIServer(s, &server{})
 	reflection.Register(s)

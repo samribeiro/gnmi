@@ -21,8 +21,8 @@ func TestParseQuery(t *testing.T) {
 			parsedQueries: []string{"a/b/c/d", "c/d/e/f"},
 		},
 		{
-			query:         "/a/b/c/d[123]/e",
-			parsedQueries: []string{"/a/b/c/d[123]/e"},
+			query:         "/a/b/c/d[12/3]/e",
+			parsedQueries: []string{"/a/b/c/d[12/3]/e"},
 		},
 	}
 	for _, tt := range tests {

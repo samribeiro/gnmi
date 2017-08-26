@@ -10,6 +10,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/openconfig/gnmi/proto/gnmi"
+	"github.com/samribeiro/gnmi/credentials"
 	"github.com/samribeiro/gnmi/helper"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
@@ -42,9 +43,8 @@ func main() {
 	if err != nil {
 		log.Exitf("error generating GetRequest: %v", err)
 	}
-	creds := helper.ClientCertificates(*targetName)
 
-	conn, err := grpc.Dial(*targetAddress, grpc.WithTransportCredentials(creds))
+	conn, err := grpc.Dial(*targetAddress, credentials.ClientCredentials(*targetName)...)
 	if err != nil {
 		log.Exitf("did not connect: %v", err)
 	}
