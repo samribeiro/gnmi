@@ -1,7 +1,7 @@
 # gNMI
 
-[![Build Status][BuildStatus]](https://travis-ci.org/samribeiro/gnmi)
-[![Documentation][Documentation]](https://godoc.org/github.com/samribeiro/gnmi)
+![Build Status](https://travis-ci.org/samribeiro/gnmi.svg?branch=master)
+![Documentation](https://godoc.org/github.com/samribeiro/gnmi)
 
 A collection of tools that perform functions specific to the gNMI protocol using Openconfig models.
 
