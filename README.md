@@ -1,7 +1,10 @@
 # gNMI
 
-![Build Status](https://travis-ci.org/samribeiro/gnmi.svg?branch=master)
-![Documentation](https://godoc.org/github.com/samribeiro/gnmi)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
+[![GoDoc](https://godoc.org/github.com/samribeiro/gnmi?status.svg)](https://godoc.org/github.com/samribeiro/gnmi)
+[![Go Report Card](https://goreportcard.com/badge/github.com/samribeiro/gnmi)](https://goreportcard.com/report/github.com/samribeiro/gnmi)
+[![Build Status](https://travis-ci.org/samribeiro/gnmi.svg?branch=master)](https://travis-ci.org/samribeiro/gnmi)
+[![codecov.io](https://codecov.io/github/samribeiro/gnmi/coverage.svg?branch=master)](https://codecov.io/github/samribeiro/gnmi?branch=master)
 
 A collection of tools that perform functions specific to the gNMI protocol using Openconfig models.
 
