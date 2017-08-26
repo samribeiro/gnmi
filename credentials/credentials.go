@@ -1,3 +1,4 @@
+// Package credentials loads certificates and validates user credentials.
 package credentials
 
 import (
@@ -45,6 +46,7 @@ func (a *userCredentials) RequireTransportSecurity() bool {
 	return true
 }
 
+// LoadCertificates loads certificates from file.
 func LoadCertificates() ([]tls.Certificate, *x509.CertPool) {
 	if *ca == "" || *cert == "" || *key == "" {
 		log.Exit("-ca -cert and -key must be set with file locations")
@@ -68,6 +70,7 @@ func LoadCertificates() ([]tls.Certificate, *x509.CertPool) {
 	return []tls.Certificate{certificate}, certPool
 }
 
+// ClientCredentials generates gRPC DialOptions for existing credentials.
 func ClientCredentials(server string) []grpc.DialOption {
 	opts := []grpc.DialOption{}
 
@@ -84,6 +87,7 @@ func ClientCredentials(server string) []grpc.DialOption {
 	return opts
 }
 
+// ServerCredentials generates gRPC ServerOptions for existing credentials.
 func ServerCredentials() []grpc.ServerOption {
 	certificates, certPool := LoadCertificates()
 
@@ -94,6 +98,7 @@ func ServerCredentials() []grpc.ServerOption {
 	}))}
 }
 
+// AuthorizeUser checks for valid credentials in the context Metadata.
 func AuthorizeUser(ctx context.Context) (string, bool) {
 	authorize := false
 	if authorizedUser.username == "" {

@@ -1,4 +1,4 @@
-// Package helper provides helper functions for the gNMI binaries.
+// Package client provides helper functions for client gNMI binaries.
 package client
 
 import (

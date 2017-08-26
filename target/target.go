@@ -1,3 +1,4 @@
+// Package target provides helper functions for target gNMI binaries.
 package target
 
 import "github.com/openconfig/gnmi/proto/gnmi"
