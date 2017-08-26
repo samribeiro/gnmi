@@ -54,20 +54,24 @@ func ToGetRequest(xpaths []string) (*gnmi.GetRequest, error) {
 					return nil, fmt.Errorf("error parsing BinaryExpr in xpath")
 				}
 
-				lhs, ok := binaryExpression.LHS.(*xpathparser.LocationPath)
-				if !ok {
+				var key string
+				switch lhs := binaryExpression.LHS.(type) {
+				case *xpathparser.LocationPath:
+					if len(lhs.Steps) != 1 {
+						return nil, fmt.Errorf("error in LHS length in xpath")
+					}
+					valNameTest, ok := lhs.Steps[0].NodeTest.(*xpathparser.NameTest)
+					if !ok {
+						return nil, fmt.Errorf("error parsing LHS NameTest in xpath")
+					}
+					key = valNameTest.Local
+				case xpathparser.Number:
+					key = strconv.FormatFloat(float64(lhs), 'f', -1, 64)
+				case xpathparser.String:
+					key = string(lhs)
+				default:
 					return nil, fmt.Errorf("error parsing LHS in xpath")
 				}
-
-				if len(lhs.Steps) != 1 {
-					return nil, fmt.Errorf("error in LHS length in xpath")
-				}
-
-				keyNameTest, ok := lhs.Steps[0].NodeTest.(*xpathparser.NameTest)
-				if !ok {
-					return nil, fmt.Errorf("error parsing LHS NameTest in xpath")
-				}
-				key := keyNameTest.Local
 
 				switch rhs := binaryExpression.RHS.(type) {
 				case *xpathparser.LocationPath:
