@@ -109,12 +109,12 @@ func AuthorizeUser(ctx context.Context) (string, bool) {
 		return "no Metadata found", authorize
 	}
 	user, ok := headers[usernameKey]
-	if !ok && len(user) > 0 {
+	if !ok || len(user) == 0 {
 		return "no username in Metadata", authorize
 	}
 	pass, ok := headers[passwordKey]
-	if !ok && len(pass) > 0 {
-		return "found username \"%s\" but no password in Metadata", authorize
+	if !ok || len(pass) == 0 {
+		return fmt.Sprintf("found username \"%s\" but no password in Metadata", user[0]), authorize
 	}
 	if authorize || pass[0] == authorizedUser.password && user[0] == authorizedUser.username {
 		return fmt.Sprintf("authorized with \"%s:%s\"", user[0], pass[0]), true
