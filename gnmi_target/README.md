@@ -17,8 +17,8 @@ go install github.com/samribeiro/gnmi/gnmi_target
 ```
 gnmi_target \
   -bind_address :32123 \
-  -key client.key \
-  -cert client.crt \
+  -key server.key \
+  -cert server.crt \
   -ca ca.crt \
   -alsologtostderr
 ```
